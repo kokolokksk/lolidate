@@ -12,7 +12,8 @@ class UpdateController {
     lateinit var updateService: UpdateService;
 
     @RequestMapping("getCatCatDMVersion")
-    public fun getCatCatDMVersion(client_id: String): String {
+    public fun getCatCatDMVersion(client_id: String?): String {
+        if(client_id==null) return "none"
         return updateService.getVersion(client_id)
     }
 }

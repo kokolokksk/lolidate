@@ -30,8 +30,11 @@ class UpdateServiceImpl:UpdateService {
             e.printStackTrace()
             return "none"
         }
-
-
     }
+
+    override fun getVersion2(client: String): String {
+        TODO("Not yet implemented")
+    }
+
 }
 
