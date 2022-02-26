@@ -1,5 +1,5 @@
 # lolidate
-和萝莉约会（不是
+应用更新服务
 
 # 需求
 - 应用版本检测
@@ -15,7 +15,22 @@
  - 服务器只存在1.0.2,1.0.3，client为1.0.1 ，则对比1.0.3中的文件记录 与 client 文件记录，并生成新的patch文件（并保存到patch文件 下次可直接下载到）
 
 
-功能
+# 功能
 - 定时检测版本文件夹，对没有file.list文件的进行生成。
 - 通过两个file.list对比生成patch文件，patch包含对应文件、位置的记录文件和当前版本的file.list文件
 - 对外提供差异版本patch下载
+
+# 数据结构
+- file.list
+```json
+  {
+    "file_name":"xxx.xx",
+    "file_path":"./",
+    "file_hash":"7b297db3a0d73450ae367ddae39c7e86",
+    "application":"1.0.1"
+  }
+  
+   ```
+
+  - patch文件应当包含需要更新的文件及其patch_file.list,与版本的file_list
+  
