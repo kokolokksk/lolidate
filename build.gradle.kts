@@ -28,9 +28,15 @@ dependencies {
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-	testImplementation("org.springframework.boot:spring-boot-starter-test")
+    implementation("junit:junit:4.13.1")
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
 	implementation("com.squareup.okhttp3:okhttp:4.9.3")
 	implementation ("com.google.code.gson:gson:2.9.0")
+	compileOnly ("org.projectlombok:lombok:1.18.22")
+	annotationProcessor ("org.projectlombok:lombok:1.18.22")
+
+	testCompileOnly ("org.projectlombok:lombok:1.18.22")
+	testAnnotationProcessor ("org.projectlombok:lombok:1.18.22")
 }
 
 tasks.withType<KotlinCompile> {
