@@ -29,6 +29,8 @@
     "file_hash":"7b297db3a0d73450ae367ddae39c7e86",
     "application":"1.0.1"
   }
-    ```
+  
+   ```
+
   - patch文件应当包含需要更新的文件及其patch_file.list,与版本的file_list
   
