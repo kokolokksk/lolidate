@@ -19,9 +19,9 @@ import kotlin.collections.HashMap
 
 @Component
 class GenerateFileListTask {
-    @Value("\${env.dev.config.file_path}")
+    @Value("\${env.config.file_path}")
     lateinit var filePath:String
-    @Value("\${env.dev.config.file_list}")
+    @Value("\${env.config.file_list}")
     lateinit var fileList:String
     val log: Logger = LoggerFactory.getLogger(this::class.java)
     private val dateFormat = SimpleDateFormat("HH:mm:ss")
