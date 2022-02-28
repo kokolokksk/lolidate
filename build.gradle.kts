@@ -7,6 +7,9 @@ plugins {
 	kotlin("plugin.spring") version "1.6.0"
 }
 
+tasks.getByName<org.springframework.boot.gradle.tasks.bundling.BootJar>("bootJar") {
+	mainClass.set("monster.loli.lolidate.LolidateApplicationKt")
+}
 group = "monster.loli"
 version = "0.0.1-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_17
