@@ -5,12 +5,9 @@ import monster.loli.lolidate.utils.LoveLoliiiUtils
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
-import org.springframework.boot.context.properties.ConfigurationProperties
-import org.springframework.context.annotation.Configuration
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
 import java.io.File
-import java.net.URI
 import java.nio.file.Paths
 import java.text.SimpleDateFormat
 import java.util.*
@@ -27,17 +24,32 @@ class GenerateFileListTask {
     private val dateFormat = SimpleDateFormat("HH:mm:ss")
     @Scheduled(fixedRate = 300*1000)
     fun scanFile(){
+        var patchFileList = ArrayList<LinkedHashMap<String,Any>>()
         log.info("time:${dateFormat.format(Date())}")
         // 应用版本路径
         val resultList: ArrayList<HashMap<String, Any>> = LoveLoliiiUtils.searchFile(Paths.get(File(filePath).toURI()),fileList)
+        var anyListExist:Boolean = true
         resultList.forEach{
             if(!(it["exist"] as Boolean)){
+                anyListExist = false
               val fl = LoveLoliiiUtils.getFileList(Paths.get(File(it["path"].toString()).toURI()))
                 val listFile = File(it["path"] as String +File.separator +fileList)
                 listFile.writeBytes(Gson().toJson(fl).toByteArray())
                 log.info("file.list saved in ${it["path"]}")
             }else{
                 log.info("file.list is exist in ${it["path"]}")
+            }
+        }
+        if(anyListExist){
+            // 检测最近两个版本patch
+            resultList.isEmpty().let {
+                val versionList:kotlin.collections.ArrayList<String> = ArrayList()
+              resultList.forEach {
+                  versionList.add(it["version"] as String)
+              }
+            }
+            if(resultList.size == 2){
+                patchFileList = LoveLoliiiUtils.getPatchFileList(resultList,filePath,fileList)
             }
         }
     }
