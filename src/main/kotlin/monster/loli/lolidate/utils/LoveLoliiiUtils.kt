@@ -156,35 +156,17 @@ class LoveLoliiiUtils{
         lateinit var filePath:String
         @Value("\${env.config.file_list}")
         lateinit var fileList:String
-        fun getPatchFileList(resultList: List<Map<String, Any>>, filePath: String, fileList: String): ArrayList<LinkedHashMap<String,Any>>{
+        fun getPatchFileList(oldFileListString:String,newFileListString:String): ArrayList<LinkedHashMap<String,Any>>{
 
-            val newerFileList:ArrayList<LinkedHashMap<String,Any>> = ArrayList()
-            val one = (resultList[0]["version"] as String)
-            val two = (resultList[1]["version"] as String)
-            val compareResult = compareVersion(one,two);
-            var versionPatch = ""
-            var newVersionList = ""
-            var oldVersionList =""
-            if(compareResult == 1){
-                versionPatch = two.replace(".","") +"-"+one.replace(".","")
-                newVersionList = filePath+one+File.separator+fileList
-                oldVersionList = filePath+two+File.separator+fileList
-            }else{
-                versionPatch = one.replace(".","") +"-"+two.replace(".","")
-                newVersionList = filePath+two+File.separator+fileList
-                oldVersionList = filePath+one+File.separator+fileList
 
-            }
+            val newerFileList:ArrayList<java.util.LinkedHashMap<String, Any>> = ArrayList()
+            val versionPatch = JsonParser.parseString(oldFileListString).asJsonObject["application"].asString.replace(".","") +"-"+JsonParser.parseString(newFileListString).asJsonObject["application"].asString.replace(".","")
             val patchFileName = "patch-$versionPatch.7z"
             val patchFile = File(filePath+"patch"+File.separator+patchFileName)
             if(!patchFile.exists()){
                 // 对比两个file.list 生成
-                val oldFileListJson = File(oldVersionList)
-                val newFileListJson = File(newVersionList)
-                val old = oldFileListJson .readText()
-                val new = newFileListJson.readText()
-                val files = JsonParser.parseString(new).asJsonObject
-                val oldFiles = JsonParser.parseString(old).asJsonObject
+                val files = JsonParser.parseString(newFileListString).asJsonObject
+                val oldFiles = JsonParser.parseString(oldFileListString).asJsonObject
                 val filesList = files.get("files").asJsonArray
                 val oldFileList = oldFiles.get("files").asJsonArray
 

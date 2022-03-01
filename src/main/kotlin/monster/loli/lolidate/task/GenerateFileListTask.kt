@@ -49,7 +49,25 @@ class GenerateFileListTask {
               }
             }
             if(resultList.size == 2){
-                patchFileList = LoveLoliiiUtils.getPatchFileList(resultList,filePath,fileList)
+                val one = (resultList[0]["version"] as String)
+                val two = (resultList[1]["version"] as String)
+                val compareResult = LoveLoliiiUtils.compareVersion(one, two);
+                var newVersionList = ""
+                var oldVersionList =""
+                if(compareResult == 1){
+                    newVersionList = filePath+one+File.separator+fileList
+                    oldVersionList = filePath+two+File.separator+fileList
+                }else{
+                    newVersionList = filePath+two+File.separator+fileList
+                    oldVersionList = filePath+one+File.separator+fileList
+
+                }
+                val oldFileListJson = File(oldVersionList)
+                val newFileListJson = File(newVersionList)
+                val old = oldFileListJson .readText()
+                val new = newFileListJson.readText()
+                patchFileList = LoveLoliiiUtils.getPatchFileList(old,new)
+
             }
         }
     }
