@@ -32,7 +32,7 @@ class GenerateFileListTask {
         val resultList: ArrayList<HashMap<String, Any>> = LoveLoliiiUtils.searchFile(Paths.get(File(filePath).toURI()),fileList)
         resultList.forEach{
             if(!(it["exist"] as Boolean)){
-              val fl = LoveLoliiiUtils.getFileList(Paths.get(URI(it["path"] as String)))
+              val fl = LoveLoliiiUtils.getFileList(Paths.get(File(it["path"].toString()).toURI()))
                 val listFile = File(it["path"] as String +File.separator +fileList)
                 listFile.writeBytes(Gson().toJson(fl).toByteArray())
                 log.info("file.list saved in ${it["path"]}")

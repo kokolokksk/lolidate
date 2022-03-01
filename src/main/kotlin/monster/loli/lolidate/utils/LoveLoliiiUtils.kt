@@ -85,7 +85,7 @@ class LoveLoliiiUtils{
                 override fun preVisitDirectory(dir: Path, attrs: BasicFileAttributes): FileVisitResult {
                     log.info("访问${dir}目录前")
                     val dirName :String= dir.fileName.toString();
-                    if(dir.toString().split(File.separator).size == 3){
+                    if(dir.toString().split(File.separator)[dir.toString().split(File.separator).size-2] == "catcatdm"){
                         val resultData:HashMap<String, Any> = HashMap()
                         resultData["version"]=dirName
                         resultData["path"]=dir.pathString
@@ -101,7 +101,7 @@ class LoveLoliiiUtils{
 
                     log.info("正在访问${file}文件")
                     if(file.fileName.toString().contains(fileList)){
-                        val key:String = file.toString().replace(fileList,"").split(File.separator)[2]
+                        val key:String = file.toString().replace(fileList,"").split(File.separator)[file.toString().replace(fileList,"").split(File.separator).size-1]
                         fList.forEach { m->
                             if(m["version"]?.equals(key) == true){
                                 m["exist"]= true
