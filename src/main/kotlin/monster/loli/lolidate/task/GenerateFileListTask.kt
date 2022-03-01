@@ -1,6 +1,8 @@
 package monster.loli.lolidate.task
 
 import com.google.gson.Gson
+import monster.loli.lolidate.utils.FileUtils
+import monster.loli.lolidate.utils.FileZip
 import monster.loli.lolidate.utils.LoveLoliiiUtils
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -66,7 +68,16 @@ class GenerateFileListTask {
                 val newFileListJson = File(newVersionList)
                 val old = oldFileListJson .readText()
                 val new = newFileListJson.readText()
-                patchFileList = LoveLoliiiUtils.getPatchFileList(old,new)
+                val patchFile = File(filePath+"patch"+File.separator+fileList)
+                if(!patchFile.exists()){
+                    patchFileList = LoveLoliiiUtils.getPatchFileList(old,new)
+                    val sevenZFileList = ArrayList<File>()
+                    patchFileList.forEach {
+                        sevenZFileList.add(File(it["file_path"].toString()))
+                    }
+                    FileUtils.archiveFile(sevenZFileList,Paths.get("f:","lolidate\\catcatdm\\patch\\patch-105-106.gz"),"")
+                   // FileUtils.compressFileTo7z(sevenZFileList,File("f:/lolidate/catcatdm/patch/"),"patch-105-106.7z")
+                }
 
             }
         }

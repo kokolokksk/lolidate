@@ -152,18 +152,13 @@ class LoveLoliiiUtils{
 
 
         }
-        @Value("\${env.config.file_path}")
-        lateinit var filePath:String
-        @Value("\${env.config.file_list}")
-        lateinit var fileList:String
+
         fun getPatchFileList(oldFileListString:String,newFileListString:String): ArrayList<LinkedHashMap<String,Any>>{
 
 
             val newerFileList:ArrayList<java.util.LinkedHashMap<String, Any>> = ArrayList()
             val versionPatch = JsonParser.parseString(oldFileListString).asJsonObject["application"].asString.replace(".","") +"-"+JsonParser.parseString(newFileListString).asJsonObject["application"].asString.replace(".","")
             val patchFileName = "patch-$versionPatch.7z"
-            val patchFile = File(filePath+"patch"+File.separator+patchFileName)
-            if(!patchFile.exists()){
                 // 对比两个file.list 生成
                 val files = JsonParser.parseString(newFileListString).asJsonObject
                 val oldFiles = JsonParser.parseString(oldFileListString).asJsonObject
@@ -200,7 +195,7 @@ class LoveLoliiiUtils{
                 }
 
                 log.info(newerFileList.toString())
-            }
+
             return newerFileList
         }
     }

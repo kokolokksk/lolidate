@@ -35,6 +35,8 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 	implementation("com.squareup.okhttp3:okhttp:4.9.3")
 	implementation ("com.google.code.gson:gson:2.9.0")
+	// https://mvnrepository.com/artifact/org.apache.commons/commons-compress
+	implementation("org.apache.commons:commons-compress:1.21")
 	compileOnly ("org.projectlombok:lombok:1.18.22")
 	annotationProcessor ("org.projectlombok:lombok:1.18.22")
 

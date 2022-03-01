@@ -1,20 +1,22 @@
 package monster.loli.lolidate.utils
 
-import kotlin.Throws
-import java.io.IOException
-import jakarta.servlet.http.HttpServletResponse
 import jakarta.servlet.ServletOutputStream
-import org.springframework.util.ResourceUtils
-import java.io.File
-import java.io.FileNotFoundException
-import java.lang.Exception
+import jakarta.servlet.http.HttpServletResponse
+import org.apache.commons.compress.archivers.ArchiveOutputStream
+import org.apache.commons.compress.archivers.sevenz.SevenZArchiveEntry
+import org.apache.commons.compress.archivers.sevenz.SevenZOutputFile
+import org.apache.commons.compress.archivers.tar.TarArchiveOutputStream
+import org.apache.commons.compress.compressors.gzip.GzipCompressorOutputStream
+import java.io.*
 import java.nio.file.Files
+import java.nio.file.Path
 import java.nio.file.Paths
+
 
 /**
  * 文件工具类
  *
- * @版权所有 广东国星科技有限公司 www.mscodecloud.com
+ *
  */
 object FileUtils {
     /**
@@ -48,4 +50,37 @@ object FileUtils {
             servletOutputStream?.close()
         }
     }
+
+    fun compressFileTo7z(list:List<File>,path:File,name:String){
+        if(!path.exists()){
+            path.mkdirs()
+        }
+        val sevenZOutput = SevenZOutputFile(File("f:/lolicate/catcatdm/patch/x.7z"))
+        val entry: SevenZArchiveEntry = sevenZOutput.createArchiveEntry(path, name)
+        sevenZOutput.putArchiveEntry(entry)
+        list.forEach{
+            sevenZOutput.write( it.readBytes())
+        }
+
+        sevenZOutput.closeArchiveEntry()
+    }
+    fun archiveFile(list: List<File>, path: Path, name: String){
+         try{
+             var fo: OutputStream = Files.newOutputStream(path)
+             var gzo:OutputStream = GzipCompressorOutputStream(fo)
+             var o:ArchiveOutputStream = TarArchiveOutputStream(gzo)
+             list.forEach {
+
+                 gzo.write(it.readBytes())
+             }
+
+
+
+
+
+         }catch (e:Exception){
+             e.printStackTrace()
+         }
+    }
+
 }
