@@ -1,6 +1,7 @@
 package monster.loli.lolidate.task
 
 import com.google.gson.Gson
+import com.google.gson.JsonParser
 import monster.loli.lolidate.utils.FileUtils
 import monster.loli.lolidate.utils.FileZip
 import monster.loli.lolidate.utils.LoveLoliiiUtils
@@ -68,15 +69,19 @@ class GenerateFileListTask {
                 val newFileListJson = File(newVersionList)
                 val old = oldFileListJson .readText()
                 val new = newFileListJson.readText()
-                val patchFile = File(filePath+"patch"+File.separator+fileList)
+                val versionPatch = JsonParser.parseString(old).asJsonObject["application"].asString.replace(".","") +"-"+ JsonParser.parseString(new).asJsonObject["application"].asString.replace(".","")
+                val patchFileName = "patch-$versionPatch.7z"
+                val patchFile = File(filePath+"patch"+File.separator+patchFileName)
                 if(!patchFile.exists()){
                     patchFileList = LoveLoliiiUtils.getPatchFileList(old,new)
                     val sevenZFileList = ArrayList<File>()
                     patchFileList.forEach {
                         sevenZFileList.add(File(it["file_path"].toString()))
                     }
-                    FileUtils.archiveFile(sevenZFileList,Paths.get("f:","lolidate\\catcatdm\\patch\\patch-105-106.gz"),"")
-                   // FileUtils.compressFileTo7z(sevenZFileList,File("f:/lolidate/catcatdm/patch/"),"patch-105-106.7z")
+                    //FileUtils.archiveFile(sevenZFileList,Paths.get("f:","lolidate\\catcatdm\\patch\\patch-105-106.gz"),"")
+                   FileUtils.compressFileTo7z(sevenZFileList,patchFile.toPath(),"")
+                }else{
+                    log.info("patch file is exist")
                 }
 
             }

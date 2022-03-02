@@ -37,6 +37,8 @@ dependencies {
 	implementation ("com.google.code.gson:gson:2.9.0")
 	// https://mvnrepository.com/artifact/org.apache.commons/commons-compress
 	implementation("org.apache.commons:commons-compress:1.21")
+	// https://mvnrepository.com/artifact/org.tukaani/xz
+	implementation("org.tukaani:xz:1.9")
 	compileOnly ("org.projectlombok:lombok:1.18.22")
 	annotationProcessor ("org.projectlombok:lombok:1.18.22")
 

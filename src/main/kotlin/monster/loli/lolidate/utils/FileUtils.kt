@@ -5,12 +5,15 @@ import jakarta.servlet.http.HttpServletResponse
 import org.apache.commons.compress.archivers.ArchiveOutputStream
 import org.apache.commons.compress.archivers.sevenz.SevenZArchiveEntry
 import org.apache.commons.compress.archivers.sevenz.SevenZOutputFile
+import org.apache.commons.compress.archivers.tar.TarArchiveEntry
 import org.apache.commons.compress.archivers.tar.TarArchiveOutputStream
 import org.apache.commons.compress.compressors.gzip.GzipCompressorOutputStream
+import org.apache.commons.compress.utils.IOUtils
 import java.io.*
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
+import kotlin.io.path.pathString
 
 
 /**
@@ -51,18 +54,19 @@ object FileUtils {
         }
     }
 
-    fun compressFileTo7z(list:List<File>,path:File,name:String){
-        if(!path.exists()){
-            path.mkdirs()
+    fun compressFileTo7z(list:List<File>,path:Path,name:String){
+        if(!path.toFile().exists()){
+           // path.toFile().mkdirs()
         }
-        val sevenZOutput = SevenZOutputFile(File("f:/lolicate/catcatdm/patch/x.7z"))
-        val entry: SevenZArchiveEntry = sevenZOutput.createArchiveEntry(path, name)
-        sevenZOutput.putArchiveEntry(entry)
+        val sevenZOutput = SevenZOutputFile(path.toFile())
         list.forEach{
-            sevenZOutput.write( it.readBytes())
+            val entry: SevenZArchiveEntry = sevenZOutput.createArchiveEntry(it.toPath(), it.name)
+            sevenZOutput.putArchiveEntry(entry);
+            sevenZOutput.write(Files.newInputStream(it.toPath()).readAllBytes())
+            sevenZOutput.closeArchiveEntry();
         }
-
-        sevenZOutput.closeArchiveEntry()
+        sevenZOutput.close()
+        log.info("compress over")
     }
     fun archiveFile(list: List<File>, path: Path, name: String){
          try{
@@ -70,13 +74,16 @@ object FileUtils {
              var gzo:OutputStream = GzipCompressorOutputStream(fo)
              var o:ArchiveOutputStream = TarArchiveOutputStream(gzo)
              list.forEach {
+                 val fis = FileInputStream(it)
+                 val bis  = BufferedInputStream(fis)
+                 val tae = o.createArchiveEntry(it,it.name)
+                 o.putArchiveEntry(tae);
+                // o.write(bis.readAllBytes())
+                 IOUtils.copy(Files.newInputStream(it.toPath()),o)
+                 bis.close();
+                 o.closeArchiveEntry()
 
-                 gzo.write(it.readBytes())
              }
-
-
-
-
 
          }catch (e:Exception){
              e.printStackTrace()

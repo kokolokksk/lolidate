@@ -85,6 +85,9 @@ class LoveLoliiiUtils{
                     val dirName :String= dir.fileName.toString();
                     if(dir.toString().split(File.separator)[dir.toString().split(File.separator).size-2] == "catcatdm"){
                         val resultData:HashMap<String, Any> = HashMap()
+                        if(dirName == "patch"){
+                            return FileVisitResult.CONTINUE
+                        }
                         resultData["version"]=dirName
                         resultData["path"]=dir.pathString
                         resultData["exist"]=false
@@ -164,7 +167,6 @@ class LoveLoliiiUtils{
                 val oldFiles = JsonParser.parseString(oldFileListString).asJsonObject
                 val filesList = files.get("files").asJsonArray
                 val oldFileList = oldFiles.get("files").asJsonArray
-
                 filesList.forEach { element ->
                     val fileName = element.asJsonObject["file_name"].asString
                     val fileItemPath = element.asJsonObject["file_path"].asString
