@@ -4,10 +4,10 @@ server:
   port: 8088
 spring:
   datasource:
-    url: jdbc:sqlite:~/lolidate/lolidate.db
+    url: jdbc:sqlite:/home/lighthouse/lolidate/lolidate.db
     driver-class-name: org.sqlite.JDBC
     username:
 env:
     config:
-      file_path: ~/lolidate/catcatdm/
+      file_path: /home/lighthouse/lolidate/catcatdm/
       file_list: file.list
