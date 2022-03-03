@@ -5,11 +5,12 @@ import jakarta.servlet.http.HttpServletResponse
 import monster.loli.lolidate.service.UpdateService
 import monster.loli.lolidate.utils.FileUtils
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("update")
+@RequestMapping("update/catcatdm")
 class UpdateController {
     @Autowired
     lateinit var updateService: UpdateService;
@@ -30,5 +31,10 @@ class UpdateController {
     public fun downloadFile(request: HttpServletRequest,respoense: HttpServletResponse,name: String?): String {
         FileUtils.downloadFile("mkf.png","D:\\robot\\ruyi\\img\\",respoense)
         return "下载成功"
+    }
+
+    @RequestMapping("getPatchFile")
+    fun getPatchFile(@RequestBody fileList :String,request: HttpServletRequest,response: HttpServletResponse){
+        updateService.getPatchFile(response,fileList)
     }
 }

@@ -5,4 +5,5 @@ import jakarta.servlet.http.HttpServletResponse
 interface UpdateService {
     fun getVersion(client:String):String
     fun updateVersion(version:String, response: HttpServletResponse):String
+    fun getPatchFile(response: HttpServletResponse, fileList: String)
 }

@@ -35,8 +35,8 @@ class LoveLoliiiUtils{
          * 获取某目录下的目录结构
          * */
         fun getFileList(start:Path): LinkedHashMap<String, Any> {
-            var allFileList :ArrayList<LinkedHashMap<String,Any>> = ArrayList()
-            var fileList:LinkedHashMap<String,Any> = LinkedHashMap()
+            val allFileList :ArrayList<LinkedHashMap<String,Any>> = ArrayList()
+            val fileList:LinkedHashMap<String,Any> = LinkedHashMap()
             Files.walkFileTree(start, object : SimpleFileVisitor<Path>() {
                 // 在访问子目录前触发该方法
                 @Throws(IOException::class)
@@ -49,10 +49,10 @@ class LoveLoliiiUtils{
                 @Throws(IOException::class)
                 override fun visitFile(file: Path, attrs: BasicFileAttributes): FileVisitResult {
 
-                    var fileProperties:LinkedHashMap<String,Any> = LinkedHashMap()
+                    val fileProperties:LinkedHashMap<String,Any> = LinkedHashMap()
                     fileProperties["file_name"] = file.fileName.toString()
                     fileProperties["file_path"] = file.pathString
-                    var fileByte:ByteArray =file.toFile().readBytes()
+                    val fileByte:ByteArray =file.toFile().readBytes()
                     fileProperties["hash"] = toHexStr(MessageDigest.getInstance("SHA-1").digest(fileByte))
                     allFileList.add(fileProperties)
                     log.info("正在访问${file}文件")
@@ -76,7 +76,7 @@ class LoveLoliiiUtils{
          * */
         fun searchFile(start:Path,fileList: String): ArrayList<HashMap<String, Any>> {
             var b:Boolean = false
-            var fList :ArrayList<HashMap<String,Any>> = ArrayList()
+            val fList :ArrayList<HashMap<String,Any>> = ArrayList()
             Files.walkFileTree(start, object : SimpleFileVisitor<Path>() {
                 // 在访问子目录前触发该方法
                 @Throws(IOException::class)

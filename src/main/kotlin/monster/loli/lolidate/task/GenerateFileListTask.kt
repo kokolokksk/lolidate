@@ -3,7 +3,6 @@ package monster.loli.lolidate.task
 import com.google.gson.Gson
 import com.google.gson.JsonParser
 import monster.loli.lolidate.utils.FileUtils
-import monster.loli.lolidate.utils.FileZip
 import monster.loli.lolidate.utils.LoveLoliiiUtils
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -11,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
 import java.io.File
+import java.nio.file.Files
 import java.nio.file.Paths
 import java.text.SimpleDateFormat
 import java.util.*
@@ -81,6 +81,9 @@ class GenerateFileListTask {
                     //FileUtils.archiveFile(sevenZFileList,Paths.get("f:","lolidate\\catcatdm\\patch\\patch-105-106.gz"),"")
                    FileUtils.compressFileTo7z(sevenZFileList,patchFile.toPath(),"")
                 }else{
+                    if(patchFile.length() == 0L){
+                      Files.delete(patchFile.toPath())
+                    }
                     log.info("patch file is exist")
                 }
 

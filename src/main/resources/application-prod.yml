@@ -2,6 +2,11 @@ server:
   servlet:
     context-path: /
   port: 8088
+spring:
+  datasource:
+    url: jdbc:sqlite:~/lolidate/lolidate.db
+    driver-class-name: org.sqlite.JDBC
+    username:
 env:
     config:
       file_path: ~/lolidate/catcatdm/

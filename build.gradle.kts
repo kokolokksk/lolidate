@@ -39,6 +39,8 @@ dependencies {
 	implementation("org.apache.commons:commons-compress:1.21")
 	// https://mvnrepository.com/artifact/org.tukaani/xz
 	implementation("org.tukaani:xz:1.9")
+	implementation("org.xerial:sqlite-jdbc:3.36.0.3")
+	implementation("org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.2")
 	compileOnly ("org.projectlombok:lombok:1.18.22")
 	annotationProcessor ("org.projectlombok:lombok:1.18.22")
 
