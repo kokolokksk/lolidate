@@ -41,6 +41,7 @@ dependencies {
 	implementation("org.tukaani:xz:1.9")
 	implementation("org.xerial:sqlite-jdbc:3.36.0.3")
 	implementation("org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.2")
+	implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
 	compileOnly ("org.projectlombok:lombok:1.18.22")
 	annotationProcessor ("org.projectlombok:lombok:1.18.22")
 
