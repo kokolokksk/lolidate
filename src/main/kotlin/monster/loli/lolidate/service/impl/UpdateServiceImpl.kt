@@ -28,7 +28,7 @@ class UpdateServiceImpl:UpdateService {
     override fun getVersion(client: String): String {
         val builder = OkHttpClient().newBuilder()
         val url = "https://raw.githubusercontent.com/kokolokksk/catcat-dm/dom/version.json"
-        builder.proxy(Proxy(Proxy.Type.HTTP, InetSocketAddress("127.0.0.1", 8889)))
+        // builder.proxy(Proxy(Proxy.Type.HTTP, InetSocketAddress("127.0.0.1", 8889)))
         val okClient = builder.build()
         val request: Request = Request.Builder()
             .url(url)
