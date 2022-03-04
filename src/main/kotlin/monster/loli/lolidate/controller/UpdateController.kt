@@ -37,4 +37,8 @@ class UpdateController {
     fun getPatchFile(@RequestBody fileList :String,request: HttpServletRequest,response: HttpServletResponse){
         updateService.getPatchFile(response,fileList)
     }
+    @RequestMapping("getLastFullFile")
+    fun getLastFullFile(request: HttpServletRequest,response: HttpServletResponse){
+        updateService.getLastFullFile(request,response)
+    }
 }

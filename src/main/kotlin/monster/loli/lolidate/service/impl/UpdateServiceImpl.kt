@@ -3,6 +3,7 @@ package monster.loli.lolidate.service.impl
 import com.google.gson.Gson
 import com.google.gson.JsonElement
 import com.google.gson.JsonParser
+import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import monster.loli.lolidate.dao.UpdateDao
 import monster.loli.lolidate.service.UpdateService
@@ -88,6 +89,11 @@ class UpdateServiceImpl:UpdateService {
             FileUtils.downloadFile(patchFileName,filePath+"patch"+File.separator,response)
         }
 
+    }
+
+    override fun getLastFullFile(request: HttpServletRequest, response: HttpServletResponse) {
+            val lastFullFile = "last.7z"
+            FileUtils.downloadFile(lastFullFile,filePath+"last"+File.separator,response)
     }
 }
 
